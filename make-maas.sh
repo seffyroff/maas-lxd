@@ -12,7 +12,7 @@ lxc profile create maas-profile 2> /dev/null
 lxc profile edit maas-profile < maas-profile
 # if [ $MAJOR -eq 2 ] && [ $MINOR -eq 0 ]
 # then
-    lxc launch ubuntu:bionic $CONTAINER -p maas-profile
+#    lxc launch ubuntu:bionic $CONTAINER -p maas-profile
 # else
     lxc profile create root-device 2> /dev/null
     lxc profile edit root-device < root-device

@@ -1,7 +1,7 @@
 config:
   raw.lxc: |-
     lxc.cgroup.devices.allow = c 10:237 rwm
-    lxc.apparmor_profile = unconfined
+    lxc.apparmor.profile = unconfined
     lxc.cgroup.devices.allow = b 7:* rwm
   security.privileged: "true"
   # user.network-config: |
