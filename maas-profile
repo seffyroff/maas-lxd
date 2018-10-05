@@ -1,28 +1,32 @@
 config:
   raw.lxc: |-
     lxc.cgroup.devices.allow = c 10:237 rwm
-    lxc.aa_profile = unconfined
+    lxc.apparmor_profile = unconfined
     lxc.cgroup.devices.allow = b 7:* rwm
   security.privileged: "true"
-  user.network-config: |
-    version: 1
-    config:
-      - type: physical
-        name: eth0
-        subnets:
-          - type: dhcp
-      - type: physical
-        name: eth1
-      - type: bridge
-        name: br0
-        bridge_interfaces:
-          - eth1
-        subnets:
-          - type: dhcp
+  # user.network-config: |
+  #   version: 1
+  #   config:
+  #     - type: physical
+  #       name: eth0
+  #       subnets:
+  #         - type: dhcp
+  #     - type: physical
+  #       name: eth1
+  #     - type: bridge
+  #       name: br0
+  #       bridge_interfaces:
+  #         - eth1
+  #       subnets:
+  #         - type: dhcp
   user.user-data: |
     #cloud-config
     bootcmd:
       - ln -s /dev/null /etc/systemd/system/avahi-daemon.service
+    apt:
+      sources:
+        maasnext:
+          source: "ppa:maas/next"
     package_upgrade: true
     packages:
       - bridge-utils
@@ -56,16 +60,9 @@ devices:
   eth0:
     name: eth0
     nictype: bridged
-    parent: lxdbr0
+    parent: br0
     type: nic
-  eth1:
-    name: eth1
-    nictype: bridged
-    parent: lxdbr0
-    type: nic
-  kvm:
-    path: /dev/kvm
-    type: unix-char
+
   loop0:
     path: /dev/loop0
     type: unix-block
